@@ -1,2 +1,2 @@
 # Fadles
-A C++ script designed to take color values as input and generate color coded particles that changes gradually between color to color.
+A C++ script designed to take hexadecimal color values as input and generate color coded particles that change gradually between color to color.
