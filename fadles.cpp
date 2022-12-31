@@ -1,4 +1,4 @@
-//by VALENTINX110 https://twitter.com/VALENTINX110
+//by VALENTINX110 https://twitter.com/VALENTINX110    https://github.com/VALENTINX110
 #include<iostream>
 #include<fstream>
 #include<string.h> //ik i'm using c string functions and idc
@@ -42,24 +42,24 @@ int main() {
 	// (I) data input section
 	
 	cout<<"- F A D L E S -"<<'\n';
-	cout<<"      > a nice little script for generating transitioning colorful particles"<<'\n';
+	cout<<"      > a nice little script for generating smooth transitioning colorful particles"<<'\n';
 	cout<<"      > by VALENTINX110"<<'\n'<<'\n';
-	cout<<"-> Enter the name of the function where you want the fadless to be generated (max 32 characters): ";
+	cout<<"-> Enter the name of the function that will contain the particle commands (max 32 characters): ";
 	cin>>function_name; cout<<'\n'<<'\n';
 	cout<<"-> Enter the function path (max 500 characters): ";
 	cin>>function_path; cout<<'\n'<<'\n';
-	cout<<"-> Ender the name of the scoreboard objective for the clock (max 32 characters): ";
+	cout<<"-> Ender the name of the scoreboard objective for the frames (max 32 characters): ";
 	cin>>sbobj_name; cout<<'\n'<<'\n';
 	cout<<"-> Enter the fake player/selector for setting it's score on the scoreboard objective (max 100 characters): ";
 	cin>>sbobj_value; cout<<'\n'<<'\n'; cin.ignore();
-	cout<<"-> Enter the execution parameters (max 500 chars): ";
+	cout<<"-> Enter the execution paramaters and conditions (max 500 chars): ";
 	cin.get(execution_parameters,501); cin.ignore(); cout<<'\n'<<'\n';
 	cout<<"-> Select the particle type by entering it's corresponding number: "<<'\n'<<"   1) dust"<<'\n'<<"   2) dust_color_transition"<<'\n'<<"   3) entity_effect"<<'\n'<<"   4) ambient_entity_effect"<<'\n';
 	cin>>particle_ID; while ((particle_ID<1)||(particle_ID>4)){ cout<<'\n'<<" ! Invalid particle ID! Please select a number from 1-4: "; cin>>particle_ID; cout<<'\n';}
 	cout<<'\n'; cin.ignore();
 	cout<<"-> Enter the position where the particles will be created (max 100 chars): ";
 	cin.get(coords,101); cin.ignore(); cout<<'\n'<<'\n';
-	cout<<"-> Enter the hex color codes in the preffered order of transitions: (press enter after each hex code and type \">end\" when done - max amount is 10): ";
+	cout<<"-> Enter the hex color codes in the preffered order of transitions: (press enter after each hex code and type \">end\" when done - the max amount of color values is 10): ";
 	enable=1;
 	while (matrix_column_max<=10&&enable==1) {
 		cin>>hex_value;
@@ -71,17 +71,17 @@ int main() {
 	}
 	enable=0;
 	cout<<'\n'<<'\n';
-	cout<<"-> Enter the the time between color transtions in seconds (only floats with 1 decimal points allowed): ";
+	cout<<"-> Enter the the time between color transtions in seconds (if a float number is entered, only 1 decimal point is allowed): ";
 	cin>>timp; cout<<'\n'<<'\n';
 	switch (particle_ID){
 		case 1:
 			cout<<"-> Enter dust size: ";
 			cin>>dust_size; cout<<'\n'<<'\n'; cin.ignore();
-			cout<<"-> Enter delta/motion parameters (max 100 characters): ";
+			cout<<"-> Enter delta/motion values (max 100 characters): ";
 			cin.get(delta,101); cin.ignore(); cout<<'\n'<<'\n';
 			cout<<"-> Enter the speed (max 100 characters): ";
 			cin>>speed; cout<<'\n'<<'\n';
-			cout<<"-> Enter the count: ";
+			cout<<"-> Enter the count of the particles: ";
 			cin>>count; cout<<'\n'<<'\n';
 			break;
 		case 2:
@@ -89,29 +89,29 @@ int main() {
 			cin>>hex_value; ctd(hex_value, color_transition);
 			cout<<"-> Enter dust size: ";
 			cin>>dust_size; cout<<'\n'<<'\n'; cin.ignore();
-			cout<<"-> Enter delta/motion parameters (max 100 characters): ";
+			cout<<"-> Enter delta/motion values (max 100 characters): ";
 			cin.get(delta,101); cin.ignore(); cout<<'\n'<<'\n';
 			cout<<"-> Enter the speed (max 100 characters): ";
 			cin>>speed; cout<<'\n'<<'\n';
-			cout<<"-> Enter the count: ";
+			cout<<"-> Enter the count of the particles: ";
 			cin>>count; cout<<'\n'<<'\n';
 			break;
 		case 3: 
 			cout<<"-> Enter the speed (max 100 characters): ";
 			cin>>speed; cout<<'\n'<<'\n';
-			cout<<"-> Enter the count: ";
+			cout<<"-> Enter the count of the particles: ";
 			cin>>count; cout<<'\n'<<'\n';
 			break;
 		case 4: 
 			cout<<"-> Enter the speed (max 100 characters): ";
 			cin>>speed; cout<<'\n'<<'\n';
-			cout<<"-> Enter the count: ";
+			cout<<"-> Enter the count of the particles: ";
 			cin>>count; cout<<'\n'<<'\n';
 			break;
 	}
-	cout<<"-> Enter force/normal: ";
+	cout<<"-> Force/Normal: ";
 	cin>>render; cout<<'\n'<<'\n';
-	cout<<"-> Enter the viewer selector (max 100 characters; type \">blank\" for keeping it blank): ";
+	cout<<"-> Enter the selector for who can see the particles (max 100 characters; type \">blank\" for keeping it blank): ";
 	cin>>viewer; cout<<'\n'<<'\n';
 	cout<<"-> Loop mode (1 = true, 0 = false): ";
 	cin>>loop; cout<<'\n'<<'\n';
@@ -203,18 +203,15 @@ int main() {
 	cout<<"-> The commands required to put in the repeating function is in the \"fadles_tick.mcfunction\" file!"<<'\n'; 
 	tick_outfile<<"execute "<<execution_parameters<<' '<<"if score "<<sbobj_value<<' '<<sbobj_name<<" matches 0.."<<tick<<" run scoreboard players add "<<sbobj_value<<' '<<sbobj_name<<" 1"<<'\n';
 	if (loop==1) tick_outfile<<"execute "<<execution_parameters<<' '<<"if score "<<sbobj_value<<' '<<sbobj_name<<" matches "<<tick<<" run scoreboard players set "<<sbobj_value<<' '<<sbobj_name<<" 0"<<'\n';
+	if (loop==0) tick_outfile<<"execute "<<execution_parameters<<' '<<"if score "<<sbobj_value<<' '<<sbobj_name<<" matches "<<tick<<" run scoreboard players reset "<<sbobj_value<<' '<<sbobj_name<<'\n';
 	tick_outfile<<"execute "<<execution_parameters<<' '<<"if score "<<sbobj_value<<' '<<sbobj_name<<" matches 0.."<<tick<<" run function "<<function_path<<'\n';
 	
 	cout<<"-> The commands required to put in the load function is in the \"fadles_load.mcfunction\" file!"; 
 	load_outfile<<"scoreboard objectives add "<<sbobj_name<<" dummy"<<'\n';
-	load_outfile<<"tellraw @a {\"text\":\"<FADLES> Enjoy the colors! :)\",\"color\":\"green\"}"<<'\n';
+	load_outfile<<"tellraw @a {\"text\":\"<FADLES> Enjoy the colorful show! :)\",\"color\":\"green\"}"<<'\n';
 	load_outfile<<"execute as @a at @s run playsound minecraft:block.note_block.banjo master @s ~ ~ ~ 1 1";
 	return 0;
 }
-
-
-
-
 //old code from the ancient times of 2021 that generated a nice rainbow fade for me
 /*  float x=255,y,z;
 	int k=3,r,c;
